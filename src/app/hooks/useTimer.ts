@@ -31,14 +31,14 @@ const useTimer = (initialMinutes: number) => {
   };
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: NodeJS.Timeout | undefined;
     if (isRunning) {
       timer = setInterval(() => {
         if (seconds === 0) {
           if (minutes === 0) {
             setIsRunning(false);
             playSound();
-            clearInterval(timer);
+            if (timer) clearInterval(timer);
           } else {
             setMinutes((prev) => prev - 1);
             setSeconds(59);
@@ -48,10 +48,12 @@ const useTimer = (initialMinutes: number) => {
         }
       }, 1000);
     } else {
-      clearInterval(timer);
+      if (timer) clearInterval(timer);
     }
 
-    return () => clearInterval(timer);
+    return () => {
+      if (timer) clearInterval(timer);
+    };
   }, [isRunning, minutes, seconds]);
 
 
