@@ -14,6 +14,22 @@ const useTimer = (initialMinutes: number) => {
     }
   }, []);
 
+  const playSound = () =>{
+    setIsAlarmPlaying(true);
+    if (audio) {
+      audio.loop = true;
+      audio.play();
+    }
+  }
+
+  const stopSound = () => {
+    setIsAlarmPlaying(false);
+    if(audio){
+        audio.pause();
+        audio.currentTime = 0;
+    }
+  };
+
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (isRunning) {
@@ -38,21 +54,6 @@ const useTimer = (initialMinutes: number) => {
     return () => clearInterval(timer);
   }, [isRunning, minutes, seconds]);
 
-  const playSound = () =>{
-    setIsAlarmPlaying(true);
-    if (audio) {
-      audio.loop = true;
-      audio.play();
-    }
-  }
-
-  const stopSound = () => {
-    setIsAlarmPlaying(false);
-    if(audio){
-        audio.pause();
-        audio.currentTime = 0;
-    }
-  };
 
   const startTimer = () => setIsRunning(true);
   const pauseTimer = () => setIsRunning(false);

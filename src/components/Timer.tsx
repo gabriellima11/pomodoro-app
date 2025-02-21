@@ -11,7 +11,7 @@ const Timer = () => {
   };
 
   const [activeMode, setActiveMode] = useState<keyof typeof MODOS>("pomodoro");
-  const { minutes, seconds, isRunning, startTimer, pauseTimer, resetTimer, setMinutes, stopSound, isAlarmPlaying } = useTimer(MODOS[activeMode]);
+  const { minutes, seconds, isRunning, startTimer, pauseTimer, resetTimer, stopSound, isAlarmPlaying } = useTimer(MODOS[activeMode]);
 
   const changeMode = (modo: keyof typeof MODOS) => {
     setActiveMode(modo);
